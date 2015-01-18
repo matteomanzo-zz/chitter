@@ -14,6 +14,7 @@ class Chitter < Sinatra::Base
   DataMapper.auto_upgrade!
 
   get '/' do
+    @posts = Post.all
     erb :index
   end
 
