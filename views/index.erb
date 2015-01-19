@@ -9,13 +9,17 @@
     <input type='submit' value='Log In'>
   </form>
 </section>
-<section id="new-post">
-  <form action="/posts" method="post">
-    <p>Message: <input type="text" name="message"></p>
-    <p>Tags: <input type="text" name="tags"></p>
-    <input type="submit" value="Post message!">
-  </form>
-</section>
+<% if current_user %>
+  <section id="new-post">
+    <form action="/posts" method="post">
+      <p>Message: <input type="text" name="message"></p>
+      <p>Tags: <input type="text" name="tags"></p>
+      <input type="submit" value="Post message!">
+    </form>
+  </section>
+<% else %>
+  <p>You must log in to write a post</p>
+<% end %>
 
 <ul>
   <p><% @posts.each do |post| %></p>
