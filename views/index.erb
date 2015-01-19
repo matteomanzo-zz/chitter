@@ -1,5 +1,12 @@
+<section id="new-post">
+  <form action="/posts" method="post">
+    Message: <input type="text" name="message">
+    <input type="submit" value="Post message!">
+  </form>
+</section>
+
 <ul>
   <% @posts.each do |post| %>
-    <li><a href="<%= post %>"><%= post.tags %></a></li>
+    <li><a href="<%= post %>"><%= post.message %></a></li>
   <% end %>
 </ul>
