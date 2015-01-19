@@ -8,6 +8,7 @@ class Chitter < Sinatra::Base
   DataMapper.setup(:default, "postgres://localhost/chitter_#{env}")
 
   require './lib/post.rb'
+  require './lib/tag.rb'
 
   DataMapper.finalize
 
@@ -20,7 +21,10 @@ class Chitter < Sinatra::Base
 
   post '/posts' do 
     message = params['message']
-    Post.create(message: message)
+    tags = params["tags"].split(",").map do |tag|
+      Tag.first_or_create(text: tag)
+    end
+    Post.create(message: message, tags: tags)
     redirect to('/')
   end 
 
