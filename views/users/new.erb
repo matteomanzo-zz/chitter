@@ -1,10 +1,10 @@
 <h2>Hello Maker! Please sign up..</h2>
 
 <form action="/users" method="post">
-  Full name: <input name="name" type="text" value='<%= @user.name %>'>
-  Username: <input name="username" type="text">
-  Email: <input name="email" type="text" value='<%= @user.email %>'>
-  Password: <input name="password" type="password">
-  Re-enter Password: <input name='password_confirmation' type='password'>
+  <p>Full name: </p><input name="name" type="text" value='<%= @user.name %>'><br>
+  <p>Username: </p><input name="username" type="text"><br>
+  <p>Email: </p><input name="email" type="text" value='<%= @user.email %>'><br>
+  <p>Password: </p><input name="password" type="password"><br>
+  <p>Re-enter Password: </p><input name='password_confirmation' type='password'>
   <input type="submit" value="Sign up">
 </form>

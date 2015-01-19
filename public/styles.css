@@ -1,0 +1,17 @@
+h1 {
+	color: #34495e;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+}
+
+body {
+	background-color: #ecf0f1;
+}
+
+#new-post {
+	margin: 0 auto;
+	width: 250px;
+}
+
+#sign-up {
+	float: right;
+}

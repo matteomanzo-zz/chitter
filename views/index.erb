@@ -1,13 +1,24 @@
+<h1>Chitter</h1>
+<section id='sign-up'>
+  <form action='/users/new' method='get'>
+    <input type='submit' value='Sign Up'>
+  </form>
+</section>
+<section id='log-in'>
+  <form action='/sessions' method='post'>
+    <input type='submit' value='Log In'>
+  </form>
+</section>
 <section id="new-post">
   <form action="/posts" method="post">
-    Message: <input type="text" name="message">
-    Tags: <input type="text" name="tags">
+    <p>Message: <input type="text" name="message"></p>
+    <p>Tags: <input type="text" name="tags"></p>
     <input type="submit" value="Post message!">
   </form>
 </section>
 
 <ul>
-  <% @posts.each do |post| %>
+  <p><% @posts.each do |post| %></p>
     <li><%= post.message %></li>
     <li><%= post.tags.map(&:text) %></li>
   <% end %>

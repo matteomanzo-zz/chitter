@@ -42,3 +42,36 @@ feature 'user signs up' do
     expect(page).to have_content("This username is already taken")
   end
 end
+
+feature 'user logs in' do 
+
+  before(:each) do
+    User.create(name: 'Matteo',
+                username: 'matteomanzo',
+                email: 'matteo@gmail.com',
+                password: '1234',
+                password_confirmation: '1234')
+  end
+
+  def log_in(username, password)
+    visit '/sessions/new'
+    fill_in 'username', with: username
+    fill_in 'password', with: password
+    click_button 'Log in'
+  end
+
+  scenario "with correct credentials" do
+    visit '/'
+    expect(page).not_to have_content("Welcome, matteomanzo")
+    log_in('matteomanzo', '1234')
+    expect(page).to have_content("Welcome, matteomanzo")
+  end
+
+  scenario "with incorrect credentials" do
+    visit '/'
+    expect(page).not_to have_content("Welcome, matteomanzo")
+    log_in('matteomanzo', '1234')
+    expect(page).to have_content("Welcome, matteomanzo")
+  end
+
+end
