@@ -8,8 +8,17 @@
   <body>
     <% if current_user %>
       <p>Welcome, <%= current_user.username %></p>
+      <form id='log-out' method="post" action="/sessions">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="Log out">
+      </form>
     <% end %>
-    <% if flash[:errors] && !flash[:errors].empty? %>
+    <% if flash[:notice] %>
+      <section id="notice">
+        <%= flash[:notice] %>
+      </section>
+    <% end %>
+    <% if flash[:errors] %>
       <p>Oops, something went wrong: </p>
       <ul id='errors'>
         <% flash[:errors].each do |error| %>

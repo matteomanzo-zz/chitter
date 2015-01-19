@@ -1,21 +1,9 @@
 require 'spec_helper'
+require_relative 'helpers/sessions'
+
+include SessionsHelper
 
 feature 'user signs up' do
-
-  def sign_up(name = 'Matteo Manzo',
-            username = 'matteomanzo',
-            email = "maker@example.com",
-            password = "ruby",
-            password_confirmation = 'ruby')
-    visit '/users/new'
-    expect(page.status_code).to eq(200)
-    fill_in :name, with: name
-    fill_in :username, with: username
-    fill_in :email, with: email
-    fill_in :password, with: password
-    fill_in :password_confirmation, with: password_confirmation
-    click_button "Sign up"
-  end
 
   scenario "when being a new maker user visiting the site" do
     expect{sign_up}.to change(User, :count).by(1)
@@ -53,13 +41,6 @@ feature 'user logs in' do
                 password_confirmation: '1234')
   end
 
-  def log_in(username, password)
-    visit '/sessions/new'
-    fill_in 'username', with: username
-    fill_in 'password', with: password
-    click_button 'Log in'
-  end
-
   scenario "with correct credentials" do
     visit '/'
     expect(page).not_to have_content("Welcome, matteomanzo")
@@ -73,5 +54,22 @@ feature 'user logs in' do
     log_in('matteomanzo', '1234')
     expect(page).to have_content("Welcome, matteomanzo")
   end
+end
 
+feature "user logs out" do
+
+  before(:each) do
+    User.create(name: 'Matteo',
+                username: 'matteomanzo',
+                email: 'matteo@gmail.com',
+                password: '1234',
+                password_confirmation: '1234')
+  end
+
+  scenario "while being signed out" do
+    log_in('matteomanzo', '1234')
+    click_button 'Log out'
+    expect(page).to have_content('Good bye!')
+    expect(page).not_to have_content('Welcome, matteomanzo')
+  end
 end
