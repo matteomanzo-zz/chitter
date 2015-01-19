@@ -8,6 +8,7 @@
 
 <ul>
   <% @posts.each do |post| %>
-    <li><a href="<%= post %>"><%= post.message %></a></li>
+    <li><%= post.message %></li>
+    <li><%= post.tags.map(&:text) %></li>
   <% end %>
 </ul>
