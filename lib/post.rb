@@ -8,5 +8,4 @@ class Post
 
   property :id,       Serial
   property :message,  Text
-
 end

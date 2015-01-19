@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'data_mapper'
+require 'rack-flash'
 
 class Chitter < Sinatra::Base
 
@@ -9,10 +10,16 @@ class Chitter < Sinatra::Base
 
   require './lib/post.rb'
   require './lib/tag.rb'
+  require './lib/user.rb'
 
   DataMapper.finalize
 
   DataMapper.auto_upgrade!
+
+  enable :sessions
+  set :session_secret, 'super secret'
+
+  use Rack::Flash
 
   get '/' do
     @posts = Post.all
@@ -28,6 +35,31 @@ class Chitter < Sinatra::Base
     redirect to('/')
   end 
 
+  get '/users/new' do
+    @user = User.new
+    erb :"users/new"
+  end
+
+  post '/users' do 
+    @user = User.create(email: params[:email],
+                password: params[:password],
+                password_confirmation: params[:password_confirmation])
+    if @user.save
+      session[:user_id] = @user.id
+      redirect to('/')
+    else
+      flash.now[:errors] = @user.errors.full_messages
+      erb :"users/new"
+    end
+  end
+
+  helpers do
+
+    def current_user
+      @current_user ||=User.get(session[:user_id]) if session[:user_id]
+    end
+
+  end
   # start the server if ruby file executed directly
   run! if app_file == $0
 end

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chitter</title>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='styles.css'>
+  </head>
+  <body>
+    <% if current_user %>
+      <p>Welcome, <%= current_user.email %></p>
+    <% end %>
+    <% if flash[:errors] && !flash[:errors].empty? %>
+      <p>Oops, something went wrong: </p>
+      <ul id='errors'>
+        <% flash[:errors].each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
